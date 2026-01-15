@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>BetterAmongUsN</AssemblyName>
+    <Product>BetterAmongUsNaHCO3</Product>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>BetterAmongUsN</RootNamespace>
+	<!--AmongUs>N:\Program Files\Steam\steamapps\common\Among Us</AmongUs-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+	<Reference Include="$(AmongUs)\BepInEx\interop\*.dll" />
+  </ItemGroup>
+    <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
+	    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(AmongUs)/BepInEx/nahco3" Condition="'$(Configuration)' == 'Debug'" />
+    </Target>
+	<ItemGroup>
+		<EmbeddedResource Include=".\Resources\**" />
+	</ItemGroup>
+</Project>

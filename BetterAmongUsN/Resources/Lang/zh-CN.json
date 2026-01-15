@@ -1,0 +1,5 @@
+{
+  "LanguageID": "13",
+  "Message.KickedByEAC": "[{0}]被EAC封禁，理由：{1}",
+  "Message.NoticeByEAC": "检测到{0}：{1}"
+}

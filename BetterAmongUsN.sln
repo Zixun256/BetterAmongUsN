@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36705.20
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterAmongUsN", "BetterAmongUsN\BetterAmongUsN.csproj", "{5160BB35-A5F7-4E2D-A95C-D14CA6DE98D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterAmongUsNLoader", "BetterAmongUsNLoader\BetterAmongUsNLoader.csproj", "{1717F5C6-3C2B-4AC3-ABA7-D2173D817129}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5160BB35-A5F7-4E2D-A95C-D14CA6DE98D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5160BB35-A5F7-4E2D-A95C-D14CA6DE98D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5160BB35-A5F7-4E2D-A95C-D14CA6DE98D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5160BB35-A5F7-4E2D-A95C-D14CA6DE98D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1717F5C6-3C2B-4AC3-ABA7-D2173D817129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1717F5C6-3C2B-4AC3-ABA7-D2173D817129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1717F5C6-3C2B-4AC3-ABA7-D2173D817129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1717F5C6-3C2B-4AC3-ABA7-D2173D817129}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05DEAB4A-F576-43E8-89A7-B4201A7ADC14}
+	EndGlobalSection
+EndGlobal
