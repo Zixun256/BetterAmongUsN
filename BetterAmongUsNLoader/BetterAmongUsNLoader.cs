@@ -45,19 +45,43 @@ namespace BetterAmongUsNLoader
             if (!File.Exists(dllFilePath))  autoUpdate = true; // force update if the file doesn't exist
             if (autoUpdate)
             {
-                Directory.CreateDirectory(dllDirectoryPath);
+                long size = GetVanillaSize();
+                if (size == -1)
+                {
+                    Log.LogWarning("Assembly Is Not Found.\nAttempts to load an existing BAU-NaHCO3.");
+                    TryLoad(dllFilePath);
+                    return;
+                }
+                Log.LogInfo("Assembly Size: " + size.ToString());
                 HttpClient http = new();
                 http.DefaultRequestHeaders.Add("User-Agent", "BAU-NaHCO3 Updater");
+
+                var assemblyInfoTask = GetAssemblyInfoAsync(http);
+                Log.LogInfo("Start getting information about the Among us assembly...");
+                assemblyInfoTask.Wait();
+                var assemblyCandidates = assemblyInfoTask.Result.Where(tuple => tuple.Size == size).Select(tuple => tuple.Epoch).Distinct().ToArray();
+
+                if (assemblyCandidates.Length == 0)
+                {
+                    Log.LogWarning("Unknown assembly detected.\nAttempts to load an existing NoS.");
+                    TryLoad(dllFilePath);
+                    return;
+                }
+
+                if (assemblyCandidates.Length == 1) Log.LogInfo("Detected Epoch: " + assemblyCandidates[0]);
+
                 var allVersions = FetchAsync(http);
                 allVersions.Wait();
                 Log.LogInfo("Releases Count: " + allVersions.Result.Count);
-                var candidates = allVersions.Result.Where(v => (v.Category == "v" || (UsePreview.Value && v.Category == "s"))).ToArray();
+                Log.LogInfo("Version Matched Releases Count: " + allVersions.Result.Count(v => assemblyCandidates.Contains(v.Epoch)));
+                var candidates = allVersions.Result.Where(v => assemblyCandidates.Contains(v.Epoch) && (v.Category == "v" || (UsePreview.Value && v.Category == "s"))).ToArray();
                 if (candidates.Length == 0)
                 {
                     Log.LogWarning("There is no BAU-NaHCO3 that can be implemented in the current environment.\nAttempts to load an existing BAU-NaHCO3.");
                     TryLoad(dllFilePath);
                     return;
                 }
+                Directory.CreateDirectory(dllDirectoryPath);
                 bool shouldDownload = true;
 
                 if (System.IO.File.Exists(dllFilePath))
@@ -98,6 +122,33 @@ namespace BetterAmongUsNLoader
                 nahco3PluginType?.GetField("LoaderPlugin", BindingFlags.Static | BindingFlags.Public)?.SetValue(null, Instance);
                 nahco3PluginType?.GetMethod("Load", BindingFlags.Static | BindingFlags.Public)?.Invoke(null, null);
             }
+        }
+        private long GetVanillaSize()
+        {
+            var path = BepInEx.Paths.GameRootPath + Path.DirectorySeparatorChar + "GameAssembly.dll";
+            Log.LogInfo("GameAssembly Path: " + path);
+
+            if (!System.IO.File.Exists(path)) return -1;
+
+            FileInfo file = new FileInfo(path);
+            return file.Length;
+        }
+        private async Task<List<(int Epoch, long Size)>> GetAssemblyInfoAsync(HttpClient http)
+        {
+            string url = ConvertUrl("https://raw.githubusercontent.com/Zixun256/BetterAmongUsN/master/epoch.dat");
+            var response = await http.GetAsync(url);
+            if (response.StatusCode != HttpStatusCode.OK) return [];
+            string result = await response.Content.ReadAsStringAsync();
+            var strings = result.Replace("\r\n", "\n").Split('\n');
+
+            List<(int Epoch, long Size)> list = new();
+            foreach (var s in strings)
+            {
+                var splited = s.Split(',');
+                if (splited.Length != 2) continue;
+                if (int.TryParse(splited[0], out var epoch) && long.TryParse(splited[1], out var size)) list.Add((epoch, size));
+            }
+            return list;
         }
         static public string ConvertUrl(string url)
         {

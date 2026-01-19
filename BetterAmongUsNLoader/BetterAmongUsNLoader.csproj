@@ -13,7 +13,7 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>BetterAmongUsNLoader</RootNamespace>
-	<!--AmongUs>N:\Program Files\Steam\steamapps\common\Among Us</AmongUs-->
+	<AmongUs>N:\Program Files\Steam\steamapps\common\Among Us</AmongUs>
   </PropertyGroup>
 
   <ItemGroup>
