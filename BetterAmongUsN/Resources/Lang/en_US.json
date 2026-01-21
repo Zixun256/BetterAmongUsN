@@ -1,0 +1,5 @@
+{
+  "LanguageID": "0",
+  "Message.KickedByEAC": "[{0}]kicked by EAC, reason:{1}",
+  "Message.NoticeByEAC": "[{0}]detected:{1}"
+}

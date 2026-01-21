@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>BetterAmongUsN</AssemblyName>
     <Product>BetterAmongUsNaHCO3</Product>
-    <Version>108.1037.0</Version>
+    <Version>108.1039.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
