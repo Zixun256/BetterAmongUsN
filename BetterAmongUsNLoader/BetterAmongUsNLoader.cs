@@ -63,7 +63,7 @@ namespace BetterAmongUsNLoader
 
                 if (assemblyCandidates.Length == 0)
                 {
-                    Log.LogWarning("Unknown assembly detected.\nAttempts to load an existing NoS.");
+                    Log.LogWarning("Unknown assembly detected.\nAttempts to load an existing BAU-NaHCO3.");
                     TryLoad(dllFilePath);
                     return;
                 }
