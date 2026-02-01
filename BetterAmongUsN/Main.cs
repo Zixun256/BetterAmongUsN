@@ -1,18 +1,24 @@
 ﻿using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
+using BetterAmongUsN;
+using Cpp2IL.Core.Attributes;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BetterAmongUsN;
 public class Main
 {
     public static BepInEx.Logging.ManualLogSource Logger;
-    private static Harmony harmony = new(Id);
-    internal static string credentialsText = $"{Name} v{Version}";
+    private static Harmony Harmony = new(Id);
+    internal static string credentialsText = $"{Name} {VisualVersion}";
     internal static string LANGUAGE_FOLDER_NAME = "./BAU-NaHCO3/Lang";
     public const string Id = "BetterAmongUsN";
-    public const string Version = "1.0.0";
+    public const string PluginVersion = "1.0.0";
+    //public const string VisualVersion = "v1.0.0";
+    public const string VisualVersion = "Preview 26.02.01a";
     public const string Name = "BetterAmongUsN";
     public static ConfigEntry<bool> DebuggerMode;
     public static BasePlugin LoaderPlugin = null!;
@@ -48,9 +54,14 @@ public class Main
             BetterAmongUsN.Logger.Disable("PlayerControl.RpcSetRole");
             BetterAmongUsN.Logger.Disable("SetRole");
         }
-        BetterAmongUsN.Logger.Info($"BetterAmongUsN v{Version} is loading...", "BetterAmongUsN");
-        harmony.PatchAll();
+        BetterAmongUsN.Logger.Info($"BetterAmongUsN v{PluginVersion} is loading...", "BetterAmongUsN");
         ClassInjector.RegisterTypeInIl2Cpp<ErrorText>();
+        Hotkey.Add([KeyCode.LeftControl, KeyCode.F5], () =>
+        {
+            if (AmongUsClient.Instance.AmHost)
+                GameManager.Instance.RpcEndGame(GameOverReason.HideAndSeek_CrewmatesByTimer, false);
+        });
+        Harmony.PatchAll();
         BetterAmongUsN.Logger.Msg("========= BetterAmongUsN loaded! =========", "Plugin Load");
     }
 }

@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>BetterAmongUsN</AssemblyName>
     <Product>BetterAmongUsNaHCO3</Product>
-    <Version>108.1039.0</Version>
+    <Version>108.1045.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -25,5 +25,8 @@
     </Target>
 	<ItemGroup>
 		<EmbeddedResource Include=".\Resources\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Main.cs~RFd9494e.TMP" />
 	</ItemGroup>
 </Project>

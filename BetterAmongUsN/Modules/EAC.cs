@@ -36,6 +36,7 @@ internal class EAC
         // nvm, it works so im not doing more changes
 
         if (!AmongUsClient.Instance.AmHost) return false;
+        if (pc.AmOwner) return false;
         //if (RoleBasisChanger.IsChangeInProgress) return false;
         if (pc == null || reader == null) return false;
         try
@@ -379,6 +380,7 @@ internal class EAC
         var Mapid = GameOptionsManager.Instance.CurrentGameOptions.MapId;
         Logger.Info("Check sabotage RPC" + ", PlayerName: " + player.GetClient().PlayerName + ", SabotageType: " + systemType.ToString() + ", amount: " + amount.ToString(), "EAC");
         if (!AmongUsClient.Instance.AmHost) return false;
+        if (player.AmOwner) return false;
 
         if (player == null)
         {
@@ -468,6 +470,7 @@ internal class EAC
     public static Dictionary<byte, int> ReportTimes = [];
     public static bool RpcReportDeadBodyCheck(PlayerControl player, NetworkedPlayerInfo target)
     {
+        if (player.AmOwner) return false;
         if (!ReportTimes.ContainsKey(player.PlayerId))
         {
             ReportTimes.Add(player.PlayerId, 0);
